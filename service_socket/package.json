@@ -1,0 +1,14 @@
+{
+  "dependencies": {
+    "dotenv": "^16.1.0",
+    "jsonwebtoken": "^9.0.0",
+    "socket.io": "^4.6.1"
+  },
+  "optionalDependencies": {
+    "bufferutil": "^4.0.7",
+    "utf-8-validate": "^5.0.10"
+  },
+  "buildpacks": [
+    "heroku-buildpack-multi"
+  ]
+}

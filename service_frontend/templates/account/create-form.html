@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block header %}   
+{% endblock header %}
+
+{% block content %}
+<div class="__regis">
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Register</button>
+    </form>
+</div>
+{% endblock content %}
+
+<!-- declare this to remove the script tag in base -->
+{% block footer_script %}{% endblock footer_script %}
