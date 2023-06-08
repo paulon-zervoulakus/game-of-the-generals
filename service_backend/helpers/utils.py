@@ -8,7 +8,7 @@ from jose import JWTError, jwt
 from sqlalchemy.orm import Session
 
 from service_backend.settings import config_jwt
-from service_backend.models.model import GameUsers
+from service_backend.models.model import UsersModel
 
 static_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "../../service_frontend/static")
 template_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "../../service_frontend/templates")
@@ -58,7 +58,7 @@ def get_password_hash(password):
     return pwd_context.hash(password)
 
 def get_user(db: Session, username: str):
-    return db.query(GameUsers).filter(GameUsers.username == username).first()
+    return db.query(UsersModel).filter(UsersModel.username == username).first()
 
 def authenticate_user(db, username: str, password: str):
     user = get_user(db, username)
