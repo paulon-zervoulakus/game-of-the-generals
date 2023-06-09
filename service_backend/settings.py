@@ -6,7 +6,7 @@ env_vars = dotenv_values()
 class config_jwt():
     SECRET_KEY = "615b0a089a03cc0352371d25458d8631b3990cf9b0408bd711905dea8df9d6c5"
     ALGORITHM = "HS256"
-    ACCESS_TOKEN_EXPIRE_MINUTES = 5
+    ACCESS_TOKEN_EXPIRE_MINUTES = 60
     ALLOWED_DOMAINS = env_vars["ALLOWED_DOMAINS"].split(",")
     
 class config_database():

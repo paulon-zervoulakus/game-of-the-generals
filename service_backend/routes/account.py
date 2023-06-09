@@ -12,7 +12,7 @@ from sqlalchemy.orm import Session
 from sqlalchemy.exc import IntegrityError
 
 from service_backend.settings import config_jwt
-from service_backend.models.model import GameUsers
+from service_backend.models.model import UsersModel
 from service_backend.models.databases import get_db
 from service_backend.models.schema import GameUsersBase
 from service_backend.helpers.utils import templates, get_password_hash, authenticate_user, create_access_token, get_allowed_domains
@@ -29,14 +29,12 @@ async def login_for_access_token(
     db: Session = Depends(get_db)):
     
     data = await request.json()
-    
+
     user = authenticate_user(db, data['username'], data['password'])
     if not user:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Incorrect username or password",
-            headers={"WWW-Authenticate": "Bearer"},
-        )
+        context = json.dumps({'code': status.HTTP_401_UNAUTHORIZED, 'message' : 'Invalid username or password', 'data': data})
+        return Response(content=context, status_code=status.HTTP_401_UNAUTHORIZED)     
+        
     access_token_expires = timedelta(minutes=config_jwt.ACCESS_TOKEN_EXPIRE_MINUTES)
    
     access_token = create_access_token(
@@ -120,7 +118,7 @@ async def form_save_user(
             email=data['email']
         )
 
-        new_user = GameUsers(
+        new_user = UsersModel(
             username=form.username,
             hashed_password=form.get_password(),
             email=form.email

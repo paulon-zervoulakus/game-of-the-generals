@@ -4,12 +4,14 @@ from datetime import timedelta, datetime
 from fastapi import APIRouter, status, Query
 from fastapi.requests import Request
 from fastapi.responses import JSONResponse, Response
+
 from pydantic import ValidationError
-from typing import Annotated
+from typing import Annotated, Dict, Any
 from jose import jwt, JWTError, ExpiredSignatureError
 
 from service_backend.settings import config_jwt
 from service_backend.helpers.utils import create_access_token
+from service_backend.helpers.decorators import user_token_required
 
 router = APIRouter()
 
@@ -115,3 +117,12 @@ async def get_user_token(
        
 
     return JSONResponse(status_code=401, content={"messaage":"Unauthorized Access","session_status":False})
+
+
+
+@router.get("/create-game/")
+@user_token_required
+async def create_game(request: Request, payload: Dict[str, Any]):
+    print(payload)
+  
+    return JSONResponse(status_code=200, context={"request":request, "message":"Hello"})
